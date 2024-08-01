@@ -12,6 +12,7 @@ import { ThemeSwitcherHome } from '#app/components/misc/theme-switcher'
 import { Logo } from '#app/components/logo'
 import ShadowPNG from '#public/images/shadow.png'
 import { getBlogPosts } from '#app/sanity/queries.js'
+import { Hero3 } from '#app/components/sections/Hero3.js'
 
 export const meta: MetaFunction = () => {
   return [{ title: `${siteConfig.siteTitle} - Starter Kit` }]
@@ -96,6 +97,9 @@ export default function Index() {
       </div>
 
       {/* Content */}
+      <div className="z-10">
+        <Hero3 />
+      </div>
       <div className="z-10 mx-auto flex w-full max-w-screen-lg flex-col gap-4 px-6">
         <div className="z-10 flex h-full w-full flex-col items-center justify-center gap-4 p-12 md:p-24">
           <Button

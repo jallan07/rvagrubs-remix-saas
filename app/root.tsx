@@ -29,6 +29,7 @@ import { GenericErrorBoundary } from '#app/components/misc/error-boundary'
 import i18nServer, { localeCookie } from '#app/modules/i18n/i18n.server'
 
 import RootCSS from './root.css?url'
+import baseCSS from '#app/styles/index.css?url'
 
 export const handle = { i18n: ['translation'] }
 
@@ -43,7 +44,10 @@ export const meta: MetaFunction<typeof loader> = ({ data }) => {
 }
 
 export const links: LinksFunction = () => {
-  return [{ rel: 'stylesheet', href: RootCSS }]
+  return [
+    { rel: 'stylesheet', href: RootCSS },
+    { rel: 'stylesheet', href: baseCSS },
+  ]
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
