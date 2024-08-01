@@ -11,8 +11,8 @@
   },
   "scripts": {
     "build": "remix vite:build",
-    "dev": "remix vite:dev",
-    "start": "dotenv -e .env remix-serve ./build/index.js",
+    "dev": "node ./server.mjs",
+    "start": "cross-env NODE_ENV=production node ./server.mjs",
     "lint": "eslint .",
     "typecheck": "tsc",
     "format": "prettier --write .",

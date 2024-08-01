@@ -7,7 +7,7 @@ import { schemaTypes } from '#app/sanity/schema'
 import { projectId, dataset, apiVersion } from '#app/sanity/projectDetails'
 import { presentationTool } from 'sanity/presentation'
 import getEnv from '#app/core/get-env'
-import { Logo } from './components/logo'
+import { SquareLogo } from './components/logo'
 export const singletons = new Set(['settings'])
 export const singletonActions = new Set(['publish', 'discardChanges', 'restore'])
 
@@ -46,6 +46,7 @@ const config = defineConfig({
         : input,
   },
   basePath: '/studio',
+  icon: SquareLogo,
 })
 
 export default config

@@ -68,7 +68,6 @@ export async function loader({ request }: LoaderFunctionArgs) {
       locale,
       toast,
       csrfToken,
-      ENV: getBrowserEnvironment(),
       honeypotProps: honeypot.getInputProps(),
       requestInfo: {
         hints: getHints(request),
@@ -93,14 +92,12 @@ function Document({
   lang = 'en',
   dir = 'ltr',
   theme = 'light',
-  ENV = {},
 }: {
   children: React.ReactNode
   nonce: string
   lang?: string
   dir?: 'ltr' | 'rtl'
   theme?: Theme
-  ENV: any
 }) {
   return (
     <html
@@ -114,11 +111,6 @@ function Document({
         <ClientHintCheck nonce={nonce} />
         <Meta />
         <Links />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `window.ENV = ${JSON.stringify(ENV)}`,
-          }}
-        />
       </head>
       <body className="h-auto w-full">
         {children}
@@ -131,7 +123,7 @@ function Document({
 }
 
 export default function AppWithProviders() {
-  const { locale, toast, csrfToken, honeypotProps, ENV } = useLoaderData<typeof loader>()
+  const { locale, toast, csrfToken, honeypotProps } = useLoaderData<typeof loader>()
 
   const nonce = useNonce()
   const theme = useTheme()
@@ -143,7 +135,7 @@ export default function AppWithProviders() {
   useToast(toast)
 
   return (
-    <Document nonce={nonce} theme={theme} lang={locale ?? 'en'} ENV={ENV}>
+    <Document nonce={nonce} theme={theme} lang={locale ?? 'en'}>
       <AuthenticityTokenProvider token={csrfToken}>
         <HoneypotProvider {...honeypotProps}>
           <Outlet />
@@ -158,7 +150,7 @@ export function ErrorBoundary() {
   const theme = useTheme()
 
   return (
-    <Document nonce={nonce} theme={theme} ENV={null}>
+    <Document nonce={nonce} theme={theme}>
       <GenericErrorBoundary
         statusHandlers={{
           403: ({ error }) => (
@@ -168,36 +160,4 @@ export function ErrorBoundary() {
       />
     </Document>
   )
-}
-
-function getBrowserEnvironment() {
-  const env = process.env
-
-  return {
-    SITE_URL: env.SITE_URL,
-    ENVIRONMENT: env.ENVIRONMENT,
-    NODE_ENV: env.NODE_ENV,
-    SESSION_SECRET: env.SESSION_SECRET,
-    ENCRYPTION_SECRET: env.ENCRYPTION_SECRET,
-    DEV_HOST_URL: env.DEV_HOST_URL,
-    PROD_HOST_URL: env.PROD_HOST_URL,
-    DATABASE_URL: env.DATABASE_URL,
-    RESEND_API_KEY: env.RESEND_API_KEY,
-    GITHUB_CLIENT_ID: env.GITHUB_CLIENT_ID,
-    GITHUB_CLIENT_SECRET: env.GITHUB_CLIENT_SECRET,
-    STRIPE_PUBLIC_KEY: env.STRIPE_PUBLIC_KEY,
-    STRIPE_SECRET_KEY: env.STRIPE_SECRET_KEY,
-    STRIPE_WEBHOOK_ENDPOINT: env.STRIPE_WEBHOOK_ENDPOINT,
-    SANITY_STUDIO_PROJECT_ID: env.SANITY_STUDIO_PROJECT_ID,
-    SANITY_STUDIO_DATASET: env.SANITY_STUDIO_DATASET,
-    SANITY_STUDIO_PREVIEW_DOMAIN: env.SANITY_STUDIO_PREVIEW_DOMAIN,
-    SANITY_STUDIO_PREVIEW_SECRET: env.SANITY_STUDIO_PREVIEW_SECRET,
-    SANITY_STUDIO_SESSION_SECRET: env.SANITY_STUDIO_SESSION_SECRET,
-    SANITY_STUDIO_STEGA_ENABLED: env.SANITY_STUDIO_STEGA_ENABLED,
-    SANITY_STUDIO_READ_TOKEN: env.SANITY_STUDIO_READ_TOKEN,
-    SANITY_STUDIO_WRITE_TOKEN: env.SANITY_STUDIO_WRITE_TOKEN,
-    SANITY_STUDIO_API_VERSION: env.SANITY_STUDIO_API_VERSION,
-    SANITY_STUDIO_URL: env.SANITY_STUDIO_URL,
-    HONEYPOT_ENCRYPTION_SEED: env.HONEYPOT_ENCRYPTION_SEED,
-  }
 }

@@ -13,7 +13,6 @@ import { z } from 'zod'
 import { getZodConstraint, parseWithZod } from '@conform-to/zod'
 import { getFormProps, getInputProps, useForm } from '@conform-to/react'
 import { Loader2 } from 'lucide-react'
-import { authenticator } from '#app/modules/auth/auth.server'
 import { getSession, commitSession } from '#app/modules/auth/auth-session.server'
 import { validateCSRF } from '#app/utils/csrf.server'
 import { checkHoneypot } from '#app/utils/honeypot.server'
@@ -35,6 +34,9 @@ export const meta: MetaFunction = () => {
 }
 
 export async function loader({ request }: LoaderFunctionArgs) {
+  // Ensure server-only logic is not exposed to the client
+  const { authenticator } = await import('#app/modules/auth/auth.server')
+
   await authenticator.isAuthenticated(request, {
     successRedirect: DASHBOARD_PATH,
   })
@@ -51,6 +53,8 @@ export async function loader({ request }: LoaderFunctionArgs) {
 }
 
 export async function action({ request }: ActionFunctionArgs) {
+  const { authenticator } = await import('#app/modules/auth/auth.server')
+
   const url = new URL(request.url)
   const pathname = url.pathname
 
