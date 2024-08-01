@@ -11,7 +11,7 @@ import { Button, buttonVariants } from '#app/components/ui/button'
 import { ThemeSwitcherHome } from '#app/components/misc/theme-switcher'
 import { Logo } from '#app/components/logo'
 import ShadowPNG from '#public/images/shadow.png'
-import { getBlogPosts } from '#app/utils/sanity/queries.js'
+import { getBlogPosts } from '#app/sanity/queries.js'
 
 export const meta: MetaFunction = () => {
   return [{ title: `${siteConfig.siteTitle} - Starter Kit` }]

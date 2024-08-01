@@ -1,4 +1,4 @@
-import { client } from './client'
+import { viewClient } from './client.server'
 
 export async function getBlogPosts() {
   const CONTENT_QUERY = `*[_type == "post"] {
@@ -12,6 +12,6 @@ export async function getBlogPosts() {
       body
     }
     `
-  const content = await client.fetch(CONTENT_QUERY)
+  const content = await viewClient.fetch(CONTENT_QUERY)
   return content
 }

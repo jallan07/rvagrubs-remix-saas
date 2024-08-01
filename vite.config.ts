@@ -5,18 +5,57 @@ import { remixDevTools } from 'remix-development-tools'
 import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
-  build: {
-    target: 'ES2022',
+  // server: {
+  //   port: 3000,
+  //   host: 'localhost',
+  // },
+  // build: {
+  //   sourcemap: process.env.NODE_ENV === 'development',
+  //   rollupOptions: {
+  //     onLog(level, log, handler) {
+  //       if (
+  //         log.cause &&
+  //         (log.cause as { message?: string }).message ===
+  //           `Can't resolve original location of error.`
+  //       ) {
+  //         return
+  //       }
+  //       handler(level, log)
+  //     },
+  //   },
+  // },
+  // plugins: [
+  //   remixDevTools(),
+  //   remix({
+  //     serverModuleFormat: 'esm',
+  //     ignoredRouteFiles: ['**/.*'],
+  //     routes: async (defineRoutes) => {
+  //       return flatRoutes('routes', defineRoutes)
+  //     },
+  //   }),
+  //   tsconfigPaths(),
+  // ],
+  plugins: [remix(), tsconfigPaths()],
+  ssr: {
+    noExternal: ['remix-i18next'],
   },
-  plugins: [
-    remixDevTools(),
-    remix({
-      serverModuleFormat: 'esm',
-      ignoredRouteFiles: ['**/.*'],
-      routes: async (defineRoutes) => {
-        return flatRoutes('routes', defineRoutes)
+  server: {
+    port: 3000,
+    host: 'localhost',
+  },
+  build: {
+    sourcemap: process.env.NODE_ENV === 'development',
+    rollupOptions: {
+      onLog(level, log, handler) {
+        if (
+          log.cause &&
+          (log.cause as { message?: string }).message ===
+            `Can't resolve original location of error.`
+        ) {
+          return
+        }
+        handler(level, log)
       },
-    }),
-    tsconfigPaths(),
-  ],
+    },
+  },
 })
