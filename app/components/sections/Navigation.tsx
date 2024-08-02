@@ -1,6 +1,6 @@
-'use client'
-import type { User } from '@prisma/client'
-import { Button } from '#app/components/ui/button'
+'use client';
+import type { User } from '@prisma/client';
+import { Button } from '#app/components/ui/button';
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -8,13 +8,26 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-} from '#app/components/ui/navigation-menu'
-import { Menu, MoveRight, X } from 'lucide-react'
-import { useState } from 'react'
-import { Logo } from '../logo'
-import { Link } from '@remix-run/react'
+} from '#app/components/ui/navigation-menu';
+import { Menu, MoveRight, X } from 'lucide-react';
+import { useState } from 'react';
+import { Logo } from '../logo';
+import { Link } from '@remix-run/react';
 
-export const Navigation = () => {
+type NavigationProps = {
+  user?: {
+    id: string;
+    email: string;
+    username: string | null;
+    customerId: string | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
+  } | null;
+};
+
+export const Navigation = ({ user }: NavigationProps) => {
+  console.log('user', user);
+
   const navigationItems = [
     {
       title: 'Home',
@@ -65,9 +78,9 @@ export const Navigation = () => {
         },
       ],
     },
-  ]
+  ];
 
-  const [isOpen, setOpen] = useState(false)
+  const [isOpen, setOpen] = useState(false);
   return (
     <header className="fixed left-0 top-0 z-40 w-full bg-background">
       <div className="container relative mx-auto flex min-h-20 flex-row items-center gap-4 lg:grid lg:grid-cols-3">
@@ -172,5 +185,5 @@ export const Navigation = () => {
         </div>
       </div>
     </header>
-  )
-}
+  );
+};

@@ -1,31 +1,31 @@
-import type { MetaFunction, LoaderFunctionArgs } from '@remix-run/node'
-import { Link, useLoaderData } from '@remix-run/react'
-import { json } from '@remix-run/node'
-import { Star } from 'lucide-react'
-import { authenticator } from '#app/modules/auth/auth.server'
-import { cn } from '#app/utils/misc'
-import { useTheme } from '#app/utils/hooks/use-theme.js'
-import { siteConfig } from '#app/utils/constants/brand'
-import { ROUTE_PATH as LOGIN_PATH } from '#app/routes/auth+/login'
-import { Button, buttonVariants } from '#app/components/ui/button'
-import { ThemeSwitcherHome } from '#app/components/misc/theme-switcher'
-import { Logo } from '#app/components/logo'
-import ShadowPNG from '#public/images/shadow.png'
+import type { MetaFunction, LoaderFunctionArgs } from '@remix-run/node';
+import { Link, useLoaderData } from '@remix-run/react';
+import { json } from '@remix-run/node';
+import { Star } from 'lucide-react';
+import { authenticator } from '#app/modules/auth/auth.server';
+import { cn } from '#app/utils/misc';
+import { useTheme } from '#app/utils/hooks/use-theme.js';
+import { siteConfig } from '#app/utils/constants/brand';
+import { ROUTE_PATH as LOGIN_PATH } from '#app/routes/auth+/login';
+import { Button, buttonVariants } from '#app/components/ui/button';
+import { ThemeSwitcherHome } from '#app/components/misc/theme-switcher';
+import { Logo } from '#app/components/logo';
+import ShadowPNG from '#public/images/shadow.png';
 
-export const ROUTE_PATH = '/blog' as const
+export const ROUTE_PATH = '/blog' as const;
 
 export const meta: MetaFunction = () => {
-  return [{ title: `${siteConfig.siteTitle} - Starter Kit` }]
-}
+  return [{ title: `${siteConfig.siteTitle} - Starter Kit` }];
+};
 
 export async function loader({ request }: LoaderFunctionArgs) {
-  const sessionUser = await authenticator.isAuthenticated(request)
-  return json({ user: sessionUser } as const)
+  const sessionUser = await authenticator.isAuthenticated(request);
+  return json({ user: sessionUser } as const);
 }
 
 export default function Index() {
-  const { user } = useLoaderData<typeof loader>()
-  const theme = useTheme()
+  const { user } = useLoaderData<typeof loader>();
+  const theme = useTheme();
 
   return (
     <div className="relative flex h-full w-full flex-col bg-card">
@@ -440,5 +440,5 @@ export default function Index() {
       <div className="base-grid fixed h-screen w-screen opacity-40" />
       <div className="fixed bottom-0 h-screen w-screen bg-gradient-to-t from-[hsl(var(--card))] to-transparent" />
     </div>
-  )
+  );
 }

@@ -1,12 +1,12 @@
-import { Outlet } from '@remix-run/react'
-import { json } from '@remix-run/node'
+import { Outlet } from '@remix-run/react';
+import { json } from '@remix-run/node';
 
-export const ROUTE_PATH = '/' as const
+export const ROUTE_PATH = '/' as const;
 
 export async function loader() {
-  return json({})
+  return json({});
 }
 
 export default function Home() {
-  return <Outlet />
+  return <Outlet />;
 }
